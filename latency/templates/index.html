@@ -145,6 +145,16 @@
 
           var tbl = document.createElement('table');
           var tbdy = document.createElement('tbody');
+          var thead = document.createElement('thead');
+          row = thead.insertRow(0);
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          cell1.innerHTML = "Type"
+          cell2.innerHTML = "Reponse Time (sec)"
+
+          cell1.style.fontWeight = "bold"
+          cell2.style.fontWeight = "bold"
+
 
           stats_labels = Object.keys(obj[providers[i]][0]["fields"])
           stats_labels.splice(0, 1)
@@ -159,7 +169,8 @@
             cell2.innerHTML = obj[providers[i]][obj[providers[i]].length-1]["fields"][stats_labels[j]].toFixed(4)
           }
           // console.log(tbl)
-          div.appendChild(header)
+          div.appendChild(header);
+          tbl.appendChild(thead);
           tbl.appendChild(tbdy);
           div.appendChild(tbl)
           table_area.appendChild(div)
