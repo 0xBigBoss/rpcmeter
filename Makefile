@@ -32,5 +32,6 @@ freeze:
 	pip freeze > requirements.txt
 
 .PHONY: format
-## General code formatting
+## General code formatting: `black . && isort .`
 format:
+	black . && isort .
