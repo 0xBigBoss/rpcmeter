@@ -1,11 +1,13 @@
-from models import *
-from web3 import Web3
-import time
-import numpy as np
-import requests
 import datetime
 import signal
 import threading
+import time
+
+import numpy as np
+import requests
+from web3 import Web3
+
+from models import *
 
 quit_event = threading.Event()
 signal.signal(signal.SIGINT, lambda *_args: quit_event.set())

@@ -1,7 +1,12 @@
-from django.shortcuts import render
 import json
 from .models import Provider, Benchmark, Chain
+
+>>>>>>> 97d31ab (Ran 'isort .' to sort imports)
 from django.core import serializers
+from django.shortcuts import render
+
+from .models import Benchmark, Provider
+
 
 # Create your views here.
 def chain(request, chain):

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Benchmark, Provider, Chain
+
+from .models import Benchmark, Chain, Provider
 
 # Register your models here.
 
