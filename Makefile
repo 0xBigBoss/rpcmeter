@@ -17,7 +17,8 @@ help:
 .PHONY: start
 ## Start a local dockerized django app with `make start`
 start:
-	docker-compose up -d
+	docker-compose up --force-recreate -d
+	echo "Go to http://localhost:8000/"
 
 .PHONY: connect
 ## Connect (i.e. open a shell) Start to the local dockerzied django app with `make connect)
