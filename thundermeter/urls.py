@@ -19,6 +19,7 @@ from latency import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+    path('chain/<str:chain>', views.chain),
+    path('', views.index)
 
 ]

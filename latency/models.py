@@ -9,6 +9,9 @@ class Benchmark(models.Model):
     median = models.FloatField()
     mean = models.FloatField()
 
+    def __str__(self):
+        return self.provider.name+" "+str(self.median)
+
     class Meta:
         managed = False
         db_table = 'benchmark'
@@ -17,6 +20,9 @@ class Benchmark(models.Model):
 class Chain(models.Model):
     name = models.CharField(max_length=99999)
     chain_id = models.CharField(max_length=99999)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         managed = False
@@ -28,6 +34,9 @@ class Provider(models.Model):
     url = models.CharField(max_length=99999)
     symbol = models.CharField(max_length=99999)
     chain = models.ForeignKey(Chain, models.DO_NOTHING)
+
+    def __str__(self):
+        return self.name+" "+self.chain.name
 
     class Meta:
         managed = False
