@@ -1,7 +1,6 @@
 import json
 from .models import Provider, Benchmark, Chain
 
->>>>>>> 97d31ab (Ran 'isort .' to sort imports)
 from django.core import serializers
 from django.shortcuts import render
 

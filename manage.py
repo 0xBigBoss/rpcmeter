@@ -2,8 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import signal
 
 from main import main_loop
+
+
+def exit_gracefully(signum, frame):
+    signal.signal(signal.SIGINT, exit_gracefully)
 
 
 def main():
@@ -17,8 +22,10 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    # main_loop()
-    execute_from_command_line(sys.argv)
+    main_loop()
+    # original_sigint = signal.getsignal(signal.SIGINT)
+    # signal.signal(signal.SIGINT, exit_gracefully)
+    # execute_from_command_line(sys.argv)
 
 
 if __name__ == "__main__":

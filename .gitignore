@@ -1,1 +1,4 @@
 __pycache__
+
+# We should not be committing this
+# db

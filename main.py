@@ -12,9 +12,6 @@ from dataclasses import dataclass
 
 from models import *
 
-quit_event = threading.Event()
-signal.signal(signal.SIGINT, lambda *_args: quit_event.set())
-
 DEFAULT_ETH_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 
@@ -69,13 +66,10 @@ def main_loop():
                 provider=provider,
                 timestamp=timestamp,
                 p25=pxx["p25"],
-                p50=pxx["p75"],
+                p50=pxx["p50"],
                 p75=pxx["p75"],
                 p90=pxx["p90"],
                 p99=pxx["p99"],
                 mean=mean,
             )
             print(benchmark)
-        if quit_event.is_set():
-            print("safely shutting down")
-            break
