@@ -4,10 +4,12 @@ from django.db import models
 class Benchmark(models.Model):
     provider = models.ForeignKey("Provider", models.DO_NOTHING)
     timestamp = models.DateTimeField()
+
+    p25 = models.FloatField()
+    p50 = models.FloatField()
+    p75 = models.FloatField()
     p90 = models.FloatField()
-    p70 = models.FloatField()
-    p30 = models.FloatField()
-    median = models.FloatField()
+    p99 = models.FloatField()
     mean = models.FloatField()
 
     def __str__(self):

@@ -16,8 +16,6 @@ def chain(request, chain):
 
     for p in Provider.objects.filter(chain=chain):
         benchmarks = Benchmark.objects.filter(provider=p)
-        print(benchmarks)
-
         data[p.name] = json.loads(serializers.serialize("json", benchmarks))
 
     return render(

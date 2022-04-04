@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-#uoye6&0(pj*d3e4x3hasy1d#@b4h0^ct332s0n8v8zo(dy8xe"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -130,3 +130,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+### Environmental variables to configure benchmarking computation ###
+
+NUM_REQUESTS = 100
+WAIT_TIME = 0.05 # Number of seconds to sleep between requests
+MEASURED_LATENCIES = [25, 50, 75, 90, 99]

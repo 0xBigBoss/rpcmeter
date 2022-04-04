@@ -6,63 +6,68 @@ import time
 import numpy as np
 import requests
 from web3 import Web3
+from typing import List, Dict
 
 from models import *
 
 quit_event = threading.Event()
 signal.signal(signal.SIGINT, lambda *_args: quit_event.set())
 
+DEFAULT_ETH_ADDRESS = "0x0000000000000000000000000000000000000000"
 
-def latency(url):
+@dataclass
+class LatencyData:
+    height_time: List[float]
+    balance_times: List[float]
+
+def get_latency_data(url: str, num_requests: int, wait_time: int) -> LatencyData:
     w3 = Web3(Web3.HTTPProvider(url))
     height_times = np.array([])
-    account_times = np.array([])
+    balance_times = np.array([])
 
-    for i in range(100):
+    # Compute latencies to get latest block height
+    for i in range(num_requests):
         start = time.time()
         w3.eth.block_number
         end = time.time()
         height_times = np.append(height_times, end - start)
-        time.sleep(0.05)
+        time.sleep(wait_time)
 
-    for i in range(100):
+    # Compute latencies to get balance
+    for i in range(num_requests):
         start = time.time()
-        w3.eth.get_balance("0x0000000000000000000000000000000000000000")
+        w3.eth.get_balance(DEFAULT_ETH_ADDRESS)
         end = time.time()
-        account_times = np.append(account_times, end - start)
-        time.sleep(0.05)
+        balance_times = np.append(balance_times, end - start)
+        time.sleep(wait_time)
 
-    return height_times, account_times
-
+    return LatencyData(height_time, balance_times)
 
 while True:
     timestamp = datetime.datetime.now()
+    num_rquests = os.getenv("NUM_REQUESTS")
+    wait_time = os.getenv("WAIT_TIME")
+    measured_latencies = os.getenv("MEASURED_LATENCIES")
 
     for provider in Provider.select():
-        height_times, account_times = latency(provider.url)
-
-        print(height_times, account_times)
-
-        p90 = (np.percentile(height_times, 90) + np.percentile(account_times, 90)) / 2
-        p70 = (np.percentile(height_times, 70) + np.percentile(account_times, 70)) / 2
-        p30 = (np.percentile(height_times, 30) + np.percentile(account_times, 30)) / 2
-        median = (
-            np.percentile(height_times, 50) + np.percentile(account_times, 50)
-        ) / 2
-        mean = (np.mean(height_times) + np.mean(account_times)) / 2
-        print(provider.name, p90, p70, p30, median, mean)
-
+        latency_data = get_latency_data(provider.url, num_rquests, wait_time)
+        pxx: Dict[s] = Dict[]
+        for pxx in measured_latencies:
+            key = f'p{pxx}'
+            # BAD
+            pxx[key] = average(np.percentile(height_times, pxx), np.percentile(balance_times, pxx))
+        mean = (np.mean(height_times) + np.mean(balance_times)) / 2
         benchmark = Benchmark.create(
             provider=provider,
             timestamp=timestamp,
-            p90=p90,
-            p70=p70,
-            p30=p30,
-            median=median,
+            p25=pxx['p25'],
+            p50=pxx['p75'],
+            p75=pxx['p75'],
+            p90=pxx['p90'],
+            p99=pxx['p99'],
             mean=mean,
         )
+        print(benchmark)
     if quit_event.is_set():
         print("safely shutting down")
         break
-
-    # time.sleep(180)
