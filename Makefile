@@ -30,3 +30,7 @@ connect:
 freeze:
 # docker exec -it thundermeter pip freeze > requirements.txt
 	pip freeze > requirements.txt
+
+.PHONY: format
+## General code formatting
+format:

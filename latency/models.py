@@ -1,7 +1,8 @@
 from django.db import models
 
+
 class Benchmark(models.Model):
-    provider = models.ForeignKey('Provider', models.DO_NOTHING)
+    provider = models.ForeignKey("Provider", models.DO_NOTHING)
     timestamp = models.DateTimeField()
     p90 = models.FloatField()
     p70 = models.FloatField()
@@ -14,7 +15,7 @@ class Benchmark(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'benchmark'
+        db_table = "benchmark"
 
 
 class Chain(models.Model):
@@ -26,7 +27,7 @@ class Chain(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chain'
+        db_table = "chain"
 
 
 class Provider(models.Model):
@@ -40,4 +41,4 @@ class Provider(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'provider'
+        db_table = "provider"

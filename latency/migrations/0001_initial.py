@@ -7,49 +7,72 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Benchmark',
+            name="Benchmark",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('timestamp', models.DateTimeField()),
-                ('p90', models.FloatField()),
-                ('p70', models.FloatField()),
-                ('p30', models.FloatField()),
-                ('median', models.FloatField()),
-                ('mean', models.FloatField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("timestamp", models.DateTimeField()),
+                ("p90", models.FloatField()),
+                ("p70", models.FloatField()),
+                ("p30", models.FloatField()),
+                ("median", models.FloatField()),
+                ("mean", models.FloatField()),
             ],
             options={
-                'db_table': 'benchmark',
-                'managed': False,
+                "db_table": "benchmark",
+                "managed": False,
             },
         ),
         migrations.CreateModel(
-            name='Chain',
+            name="Chain",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=99999)),
-                ('chain_id', models.CharField(max_length=99999)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=99999)),
+                ("chain_id", models.CharField(max_length=99999)),
             ],
             options={
-                'db_table': 'chain',
-                'managed': False,
+                "db_table": "chain",
+                "managed": False,
             },
         ),
         migrations.CreateModel(
-            name='Provider',
+            name="Provider",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=99999)),
-                ('url', models.CharField(max_length=99999)),
-                ('symbol', models.CharField(max_length=99999)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=99999)),
+                ("url", models.CharField(max_length=99999)),
+                ("symbol", models.CharField(max_length=99999)),
             ],
             options={
-                'db_table': 'provider',
-                'managed': False,
+                "db_table": "provider",
+                "managed": False,
             },
         ),
     ]

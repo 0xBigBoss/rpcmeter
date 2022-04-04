@@ -1,6 +1,7 @@
 from peewee import *
 
-db = SqliteDatabase('db')
+db = SqliteDatabase("db")
+
 
 class Chain(Model):
     name = CharField()
@@ -9,17 +10,19 @@ class Chain(Model):
     class Meta:
         database = db
 
+
 class Provider(Model):
     name = CharField()
     url = CharField()
     symbol = CharField()
-    chain = ForeignKeyField(Chain, backref='chain')
+    chain = ForeignKeyField(Chain, backref="chain")
 
     class Meta:
         database = db
 
+
 class Benchmark(Model):
-    provider = ForeignKeyField(Provider, backref='provider')
+    provider = ForeignKeyField(Provider, backref="provider")
     timestamp = DateTimeField()
     p90 = FloatField()
     p70 = FloatField()
@@ -28,7 +31,8 @@ class Benchmark(Model):
     mean = FloatField()
 
     class Meta:
-        database = db 
+        database = db
+
 
 db.connect()
 db.create_tables([Chain, Provider, Benchmark])

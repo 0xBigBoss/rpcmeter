@@ -15,14 +15,16 @@ def chain(request, chain):
 
         data[p.name] = json.loads(serializers.serialize("json", benchmarks))
 
-    return render(request, "chain.html", {
-        "data": json.dumps(data),
-        "providers": Provider.objects.all(),
-        "chain": chain.name.capitalize()
-    })
+    return render(
+        request,
+        "chain.html",
+        {
+            "data": json.dumps(data),
+            "providers": Provider.objects.all(),
+            "chain": chain.name.capitalize(),
+        },
+    )
 
 
 def index(request):
-    return render(request, "index.html", {
-        "chains": Chain.objects.all()
-    })
+    return render(request, "index.html", {"chains": Chain.objects.all()})
