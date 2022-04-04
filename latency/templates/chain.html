@@ -1,0 +1,301 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Thundermeter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{%static 'favicon-white.svg'%}">
+    <style media="screen">
+      body {
+        font-family: "Chivo";
+        text-align: center;
+      }
+
+      th, td {
+        border:1px solid black;
+        padding:7px;
+      }
+
+      table {
+        margin:25px;
+        width: 319px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="shadow">
+        <div class="row mt-4 mb-4 text-center">
+          <div class="col">
+            <!-- <h2 class='mt-2'><b>ThunderMeter</b></h2> -->
+            <a href="/"><img class="p-4" href="/" width="350px;"src="{%static 'full-logo.svg'%}" alt=""></a>
+
+            <p>A RPC Latency Tracker (Beta)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="shadow">
+        <div class="text-center pt-3">
+          <h4>{{chain}}:</h4>
+        </div>
+        <div class="row p-3" style="">
+          <div class="col">
+            <div class="" width="400" height="400">
+              <canvas id="latency-leaderboard" width="100" height="100"></canvas>
+            </div>
+          </div>
+          <div class="col">
+            <div class="">
+              <canvas id="latency-over-time" width="400" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shadow">
+        <div class="row mt-5 p-3" id="statistics">
+          <div class="">
+            <table>
+              <h5><strong>All RPCs</strong></h5>
+              <thead>
+                <tr>
+                  <th>RPC Name</th>
+                  <th>Median Response Times (sec)</th>
+                </tr>
+              </thead>
+              <tbody id="median-times">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="shadow">
+        <div class="row mt-5 p-4 mb-5">
+          <div class="col">
+            <div class="row">
+              <h5><strong>What is the ThunderMeter?</strong></h5>
+            </div>
+            <div class="row text-left">
+              <p>The Thundermeter was a tool built by <a href="https://t.me/p1errre" target="_blank">Pierre</a> and <a href="https://t.me/Dolshansky" target="_blank">Olshansky</a>. The aim of the tool is to track different RPC providers' latency and response times to watch POKT become the fastest RPC provider ;).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript">
+
+        Chart.defaults.font.family = "Chivo"
+
+        border_colors = [
+          'rgba(29, 138, 237)',
+          'rgba(255, 159, 64)',
+          'rgba(255, 205, 86)',
+          'rgba(75, 192, 192)',
+          'rgba(255, 99, 132)',
+          'rgba(153, 102, 255)',
+          'rgba(201, 203, 207)'
+        ]
+
+        background_colors = [
+          'rgba(29,138,237, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 207, 0.2)'
+        ]
+
+
+        obj = {{data|safe}}
+        console.log(obj)
+        providers = Object.keys(obj)
+        median_times = {}
+        latest_median_times = []
+        timestamps = []
+        table = document.querySelector("#median-times")
+        for (var i = 0; i < providers.length; i++) {
+          median_times[providers[i]]=[]
+
+          var row = table.insertRow(0);
+
+          // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+
+          // Add some text to the new cells:
+          cell1.innerHTML = providers[i];
+          cell2.innerHTML = obj[providers[i]][obj[providers[i]].length-1]["fields"]["median"].toFixed(4);
+
+          latest_median_times.push(obj[providers[i]][obj[providers[i]].length-1]["fields"]["median"])
+
+          for (var n = 0; n < obj[providers[i]].length; n++) {
+
+            // I know its not efficient but idgaf.
+            if (timestamps.includes(obj[providers[i]][n]["fields"]["timestamp"]) == false){
+              timestamps.push(obj[providers[i]][n]["fields"]["timestamp"])
+            }
+            median_times[providers[i]].push(obj[providers[i]][n]["fields"]["median"])
+          }
+
+          // create in-depth statistics table
+
+          var table_area = document.querySelector("#statistics")
+          var div = document.createElement('div');
+          var header = document.createElement('h5')
+          header.style.fontWeight = "bold"
+
+          header.innerText = providers[i]
+
+          var tbl = document.createElement('table');
+          var tbdy = document.createElement('tbody');
+          var thead = document.createElement('thead');
+          row = thead.insertRow(0);
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          cell1.innerHTML = "Type"
+          cell2.innerHTML = "Reponse Time (sec)"
+
+          cell1.style.fontWeight = "bold"
+          cell2.style.fontWeight = "bold"
+
+
+          stats_labels = Object.keys(obj[providers[i]][0]["fields"])
+          stats_labels.splice(0, 1)
+          stats_labels.splice(0, 1)
+          console.log(stats_labels, "stat_labels")
+          for (var j = 0; j < stats_labels.length; j++) {
+            var row = tbdy.insertRow(0)
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            console.log(obj[providers[i]])
+            cell1.innerHTML = stats_labels[j]
+            cell2.innerHTML = obj[providers[i]][obj[providers[i]].length-1]["fields"][stats_labels[j]].toFixed(4)
+          }
+          // console.log(tbl)
+          div.appendChild(header);
+          tbl.appendChild(thead);
+          tbl.appendChild(tbdy);
+          div.appendChild(tbl)
+          table_area.appendChild(div)
+
+        }
+
+        console.log(median_times)
+        console.log(timestamps)
+        over_time_datasets = []
+
+        formatted_timestamps = []
+
+        for (var i = 0; i < timestamps.length; i++) {
+          a = new Date(timestamps[i])
+
+          formatted_timestamps.push(a.toLocaleDateString('en-US', {month: 'short', day: 'numeric'}))
+        }
+
+        for (var i = 0; i < providers.length; i++) {
+
+          formatted_data = []
+          for (var j = median_times[providers[i]].length; j < timestamps.length; j++) {
+            formatted_data.push(0)
+          }
+
+          for (var n = 0; n < median_times[providers[i]].length; n++) {
+            formatted_data.push(median_times[providers[i]][n])
+          }
+
+          over_time_datasets.push({
+            label: providers[i],
+            data: formatted_data,
+            borderColor: border_colors[i],
+            backgroundColor: background_colors[i]
+          })
+        }
+
+        console.log(over_time_datasets)
+
+        // create leaderboard chart
+        const over_time_data = {
+          labels: formatted_timestamps,
+          datasets: over_time_datasets
+        }
+
+        const over_time_config = {
+          type: 'line',
+          data: over_time_data,
+          options: {
+            plugins: {
+              title: {
+                display: true,
+                text: 'Reponse Time Over Time (Median)',
+                size: 50,
+                font: {
+                  size: 18,
+                }
+              },
+            },
+          }
+        };
+
+        const over_time_chart = new Chart(
+          document.getElementById('latency-over-time'),
+          over_time_config
+        );
+
+        // create leaderboard chart
+        const leaderboard_data = {
+          labels: providers,
+          datasets: [{
+            label: 'Median Reponse Times',
+            data: latest_median_times,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2
+          }]
+        }
+
+        console.log(leaderboard_data)
+
+        const leaderboard_config = {
+          type: 'bar',
+          data: leaderboard_data,
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Reponse Time Leaderboard (Median)',
+                    size: 50,
+                    font: {
+                      size: 18,
+                    }
+                },
+                legend: {
+                  display: false
+                }
+            },
+          },
+        };
+
+        const leaderboard_chart = new Chart(
+          document.getElementById('latency-leaderboard'),
+          leaderboard_config
+        );
+
+
+      </script>
+
+    </div>
+  </body>
+</html>
