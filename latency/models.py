@@ -16,7 +16,7 @@ class Benchmark(models.Model):
         return self.provider.name+" "+str(self.median)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "benchmark"
 
 
@@ -28,7 +28,7 @@ class Chain(models.Model):
         return self.name
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "chain"
 
 
@@ -42,5 +42,5 @@ class Provider(models.Model):
         return self.name+" "+self.chain.name
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "provider"
