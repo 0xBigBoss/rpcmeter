@@ -3,12 +3,12 @@ import os
 import signal
 import threading
 import time
-from django.conf import settings
 from dataclasses import dataclass
 from typing import Dict, List
 
 import numpy as np
 import requests
+from django.conf import settings
 from web3 import Web3
 
 from models import *
