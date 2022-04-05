@@ -134,6 +134,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ### Environmental variables to configure benchmarking computation ###
 
-NUM_REQUESTS = 1
+NUM_REQUESTS = 100
 WAIT_TIME = 0.1  # Number of seconds to sleep between requests
 MEASURED_LATENCIES = [25, 50, 75, 90, 99]
