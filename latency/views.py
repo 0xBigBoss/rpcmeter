@@ -1,10 +1,9 @@
 import json
-from .models import Provider, Benchmark, Chain
 
 from django.core import serializers
 from django.shortcuts import render
 
-from .models import Benchmark, Provider
+from .models import Benchmark, Chain, Provider
 
 
 # Create your views here.

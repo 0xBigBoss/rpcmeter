@@ -13,7 +13,7 @@ class Benchmark(models.Model):
     mean = models.FloatField()
 
     def __str__(self):
-        return self.provider.name+" "+str(self.median)
+        return self.provider.name + " " + str(self.median)
 
     class Meta:
         managed = True
@@ -39,7 +39,7 @@ class Provider(models.Model):
     chain = models.ForeignKey(Chain, models.DO_NOTHING)
 
     def __str__(self):
-        return self.name+" "+self.chain.name
+        return self.name + " " + self.chain.name
 
     class Meta:
         managed = True

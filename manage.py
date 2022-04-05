@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
-import sys
 import signal
+import sys
+from threading import Thread
 
 from main import main_loop
-
-
-def exit_gracefully(signum, frame):
-    signal.signal(signal.SIGINT, exit_gracefully)
 
 
 def main():
@@ -22,10 +19,9 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    main_loop()
-    # original_sigint = signal.getsignal(signal.SIGINT)
-    # signal.signal(signal.SIGINT, exit_gracefully)
-    # execute_from_command_line(sys.argv)
+    thread = Thread(target=main_loop, args=(), daemon=True)
+    thread.start()
+    execute_from_command_line(sys.argv)
 
 
 if __name__ == "__main__":
