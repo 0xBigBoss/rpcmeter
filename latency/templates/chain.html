@@ -3,27 +3,36 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Thundermeter</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chivo&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="{%static 'favicon-white.svg'%}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chivo&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="{%static 'favicon-white.svg'%}" />
     <style media="screen">
       body {
         font-family: "Chivo";
         text-align: center;
       }
 
-      th, td {
-        border:1px solid black;
-        padding:7px;
+      th,
+      td {
+        border: 1px solid black;
+        padding: 7px;
       }
 
       table {
-        margin:25px;
+        margin: 25px;
         width: 319px;
       }
     </style>
@@ -34,7 +43,14 @@
         <div class="row mt-4 mb-4 text-center">
           <div class="col">
             <!-- <h2 class='mt-2'><b>ThunderMeter</b></h2> -->
-            <a href="/"><img class="p-4" href="/" width="350px;"src="{%static 'full-logo.svg'%}" alt=""></a>
+            <a href="/"
+              ><img
+                class="p-4"
+                href="/"
+                width="350px;"
+                src="{%static 'full-logo.svg'%}"
+                alt=""
+            /></a>
 
             <p>A RPC Latency Tracker (Beta)</p>
           </div>
@@ -48,7 +64,11 @@
         <div class="row p-3" style="">
           <div class="col">
             <div class="" width="400" height="400">
-              <canvas id="latency-leaderboard" width="100" height="100"></canvas>
+              <canvas
+                id="latency-leaderboard"
+                width="100"
+                height="100"
+              ></canvas>
             </div>
           </div>
           <div class="col">
@@ -70,8 +90,7 @@
                   <th>Median Response Times (sec)</th>
                 </tr>
               </thead>
-              <tbody id="median-times">
-              </tbody>
+              <tbody id="median-times"></tbody>
             </table>
           </div>
         </div>
@@ -84,7 +103,14 @@
               <h5><strong>What is the ThunderMeter?</strong></h5>
             </div>
             <div class="row text-left">
-              <p>The Thundermeter was a tool built by <a href="https://t.me/p1errre" target="_blank">Pierre</a> and <a href="https://t.me/Dolshansky" target="_blank">Olshansky</a>. The aim of the tool is to track different RPC providers' latency and response times to watch POKT become the fastest RPC provider ;).</p>
+              <p>
+                The Thundermeter was a tool built by
+                <a href="https://t.me/p1errre" target="_blank">Pierre</a> and
+                <a href="https://t.me/Dolshansky" target="_blank">Olshansky</a>.
+                The aim of the tool is to track different RPC providers' latency
+                and response times to watch POKT become the fastest RPC provider
+                ;).
+              </p>
             </div>
           </div>
         </div>
@@ -132,9 +158,9 @@
 
           // Add some text to the new cells:
           cell1.innerHTML = providers[i];
-          cell2.innerHTML = obj[providers[i]][obj[providers[i]].length-1]["fields"]["median"].toFixed(4);
+          cell2.innerHTML = obj[providers[i]][obj[providers[i]].length-1]["fields"]["p50"].toFixed(4);
 
-          latest_median_times.push(obj[providers[i]][obj[providers[i]].length-1]["fields"]["median"])
+          latest_median_times.push(obj[providers[i]][obj[providers[i]].length-1]["fields"]["p50"])
 
           for (var n = 0; n < obj[providers[i]].length; n++) {
 
@@ -142,7 +168,7 @@
             if (timestamps.includes(obj[providers[i]][n]["fields"]["timestamp"]) == false){
               timestamps.push(obj[providers[i]][n]["fields"]["timestamp"])
             }
-            median_times[providers[i]].push(obj[providers[i]][n]["fields"]["median"])
+            median_times[providers[i]].push(obj[providers[i]][n]["fields"]["p50"])
           }
 
           // create in-depth statistics table
@@ -292,10 +318,7 @@
           document.getElementById('latency-leaderboard'),
           leaderboard_config
         );
-
-
       </script>
-
     </div>
   </body>
 </html>
