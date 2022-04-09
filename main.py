@@ -1,7 +1,7 @@
 import datetime
 import os
 import signal
-from threading import Thread
+from threading import Thread, Event
 import time
 from dataclasses import dataclass
 from typing import Dict, List
