@@ -19,27 +19,78 @@
       rel="stylesheet"
     />
     <link rel="shortcut icon" href="{%static 'favicon-white.svg'%}" />
+    <link rel="stylesheet" href="{%static 'css/clouds.css'%}">
     <style media="screen">
       body {
         font-family: "Chivo";
         text-align: center;
       }
 
-      th,
-      td {
-        border: 1px solid black;
-        padding: 7px;
+      .table-striped {
+        border: 1px solid #ccc;
+        margin: 25px;
+        width: 319px;
       }
 
       table {
-        margin: 25px;
-        width: 319px;
+        border:none;
+      }
+
+      td {
+        border:none;
+      }
+
+      thead {
+        border:none
       }
     </style>
   </head>
   <body>
+    <div id="background-wrap">
+    <div class="x1">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x2">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x3">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x4">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x5">
+        <div class="cloud"></div>
+    </div>
+    <div class="x3">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x4">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x5">
+        <div class="cloud"></div>
+    </div>
+    <div class="x1">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x2">
+        <div class="cloud"></div>
+    </div>
+
+    <div class="x3">
+        <div class="cloud"></div>
+    </div>
+</div>
     <div class="container">
-      <div class="shadow">
+      <div class="shadow-lg bg-light">
         <div class="row mt-4 mb-4 text-center">
           <div class="col">
             <!-- <h2 class='mt-2'><b>ThunderMeter</b></h2> -->
@@ -57,7 +108,7 @@
         </div>
       </div>
 
-      <div class="shadow">
+      <div class="shadow-lg bg-light">
         <div class="text-center pt-3">
           <h4>{{chain}}:</h4>
         </div>
@@ -79,10 +130,10 @@
         </div>
       </div>
 
-      <div class="shadow">
+      <div class="shadow-lg bg-light">
         <div class="row mt-5 p-3" id="statistics">
           <div class="">
-            <table>
+            <table class="table table-striped">
               <h5><strong>All RPCs</strong></h5>
               <thead>
                 <tr>
@@ -96,7 +147,7 @@
         </div>
       </div>
 
-      <div class="shadow">
+      <div class="shadow-lg bg-light">
         <div class="row mt-5 p-4 mb-5">
           <div class="col">
             <div class="row">
@@ -111,6 +162,10 @@
                 and response times to watch POKT become the fastest RPC provider
                 ;).
               </p>
+            </div>
+            <div class="row text-left">
+              <b>Technical Details</b>
+              <p>Every benchmark is created by sending 100 eth_getBalance("0x0000000000000000000000000000000000000000") in parallel, and measuring the latency of each request. This process is repeated 5 times per benchmark with a 5 second delay between. The server making these requests is in Miami, Florida</p>
             </div>
           </div>
         </div>
@@ -181,6 +236,7 @@
           header.innerText = providers[i]
 
           var tbl = document.createElement('table');
+          tbl.className = 'table table-striped'
           var tbdy = document.createElement('tbody');
           var thead = document.createElement('thead');
           row = thead.insertRow(0);

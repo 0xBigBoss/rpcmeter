@@ -1,7 +1,7 @@
 import datetime
 import os
 import signal
-import threading
+from threading import Thread
 import time
 from dataclasses import dataclass
 from typing import Dict, List
@@ -13,57 +13,73 @@ from web3 import Web3
 
 from models import *
 
+# this is to prevent hard shutdowns where the process is interrupted halfway through etc.
+quit_event = threading.Event()
+signal.signal(signal.SIGINT, lambda *_args: quit_event.set())
+
+# will change to some fancy environment or settings thing later.
 DEFAULT_ETH_ADDRESS = "0x0000000000000000000000000000000000000000"
+NUM_REQUESTS = 10
+HITS = 2
+DELAY = 2
+MEASURED_LATENCIES = [25, 50, 75, 90, 99]
 
+def send_request(w3: Web3):
+    start = time.time()
+    w3.eth.get_balance(DEFAULT_ETH_ADDRESS)
+    end = time.time()
+    return end-start
 
-@dataclass
-class LatencyData:
-    height_time: List[float]
-    balance_times: List[float]
-
-
-def get_latency_data(url: str, num_requests: int, wait_time: int) -> LatencyData:
-    w3 = Web3(Web3.HTTPProvider(url))
-    height_times = np.array([])
-    balance_times = np.array([])
-
-    # Compute latencies to get latest block height
-    for _ in range(num_requests):
-        start = time.time()
-        w3.eth.block_number
-        end = time.time()
-        height_times = np.append(height_times, end - start)
-        time.sleep(wait_time)
-
-    # Compute latencies to get balance
-    for _ in range(num_requests):
-        start = time.time()
-        w3.eth.get_balance(DEFAULT_ETH_ADDRESS)
-        end = time.time()
-        balance_times = np.append(balance_times, end - start)
-        time.sleep(wait_time)
-
-    return LatencyData(height_times, balance_times)
-
+# found this on stackoverflow, allows threading functions to give return values.
+class Request(Thread):
+    def __init__(self, group=None, target=None, name=None,
+                 args=(), kwargs={}, Verbose=None):
+        Thread.__init__(self, group, target, name, args, kwargs)
+        self._return = None
+    def run(self):
+        if self._target is not None:
+            self._return = self._target(*self._args,
+                                                **self._kwargs)
+    def join(self, *args):
+        Thread.join(self, *args)
+        return self._return
 
 def main_loop():
     while True:
         timestamp = datetime.datetime.now()
-        num_requests = settings.NUM_REQUESTS
-        wait_time = settings.WAIT_TIME
-        measured_latencies = settings.MEASURED_LATENCIES
+        num_requests = NUM_REQUESTS
+        delay = DELAY
+        hits = HITS
+        measured_latencies = MEASURED_LATENCIES
+
+        # iterates through providers
         for provider in Provider.select():
-            latency_data = get_latency_data(provider.url, num_requests, wait_time)
+            w3 = Web3(Web3.HTTPProvider(provider.url))
+            balance_times = np.array([])
+            # how many times to smash the web3 provider ;).
+            for i in range(hits):
+                latencies = np.array([])
+                threads = []
+                for i in range(num_requests):
+                    t = Request(target=send_request, args=[w3])
+                    t.start()
+                    threads.append(t)
+
+                for t in threads:
+                    latencies = np.append(latencies, t.join())
+                balance_times = np.concatenate([balance_times, latencies])
+                print(balance_times)
+                time.sleep(delay)
+
             pxxDict: Dict[str, float] = dict()
             for pxx in measured_latencies:
                 key = f"p{pxx}"
                 pxxDict[key] = (
-                    np.percentile(latency_data.height_time, pxx)
-                    + np.percentile(latency_data.balance_times, pxx)
-                ) / 2
+                    np.percentile(balance_times, pxx)
+                )
             mean = (
-                np.mean(latency_data.height_time) + np.mean(latency_data.balance_times)
-            ) / 2
+                np.mean(balance_times)
+            )
             benchmark = Benchmark.create(
                 provider=provider,
                 timestamp=timestamp,
@@ -75,3 +91,8 @@ def main_loop():
                 mean=mean,
             )
             print(benchmark)
+        if quit_event.is_set():
+            print("safely shutting down")
+            break
+if __name__ == '__main__':
+    main_loop()
