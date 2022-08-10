@@ -1,94 +1,6 @@
+{% extends 'layout.html' %}
 {%load static%}
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Thundermeter</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Chivo&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="shortcut icon" href="{%static 'favicon-white.svg'%}" />
-    <link rel="stylesheet" href="{%static 'css/clouds.css'%}">
-    <style media="screen">
-      body {
-        font-family: "Chivo";
-        text-align: center;
-      }
-
-      .table-striped {
-        border: 1px solid #ccc;
-        margin: 25px;
-        width: 319px;
-      }
-
-      table {
-        border:none;
-      }
-
-      td {
-        border:none;
-      }
-
-      thead {
-        border:none
-      }
-    </style>
-  </head>
-  <body>
-    <div id="background-wrap">
-    <div class="x1">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x2">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x3">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x4">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x5">
-        <div class="cloud"></div>
-    </div>
-    <div class="x3">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x4">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x5">
-        <div class="cloud"></div>
-    </div>
-    <div class="x1">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x2">
-        <div class="cloud"></div>
-    </div>
-
-    <div class="x3">
-        <div class="cloud"></div>
-    </div>
-</div>
+{% block body %}
     <div class="container">
       <div class="shadow-lg bg-light">
         <div class="row mt-4 mb-4 text-center">
@@ -376,5 +288,4 @@
         );
       </script>
     </div>
-  </body>
-</html>
+{% endblock %}

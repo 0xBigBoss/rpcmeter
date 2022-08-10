@@ -4,13 +4,12 @@ import os
 import signal
 import sys
 from threading import Thread
-
-from main import main_loop
-
+from dotenv import load_dotenv
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "thundermeter.settings")
+    load_dotenv()
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -19,8 +18,6 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    thread = Thread(target=main_loop, args=(), daemon=True)
-    thread.start()
     execute_from_command_line(sys.argv)
 
 

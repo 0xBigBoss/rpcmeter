@@ -1,17 +1,18 @@
 {% extends 'layout.html' %}
-{% load static %}
+{%load static%}
 {% block body %}
     <div class="container h-100">
      <div class="d-flex justify-content-md-center align-items-center vh-100">
        <div class="shadow p-5 text-center bg-white">
          <img src="{%static 'full-logo.svg'%}" width="400px" alt="">
          <div class="header mt-5">
+           <!-- <h3><strong>Chains:</strong></h3> -->
          </div>
          <div class="chains row">
-           {%for chain in chains%}
-           <a class="shadow p-3 col m-2 button" href="/{{chain.name}}">
-             <div class="" href="/{{chain.name}}">
-               {{chain.name}}
+           {%for region in regions %}
+	   <a class="shadow p-3 col m-2 button" href="/{{chain}}/{{region.name}}">
+		   <div class="" href="/{{chain}}/{{region.name}}">
+               {{region.name}}
              </div>
            </a>
             {%endfor%}

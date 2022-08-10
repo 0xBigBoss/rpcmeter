@@ -1,0 +1,34 @@
+body {
+  background-image: url("/static/background.svg");
+  background-size: cover;
+
+  font-family: "Chivo";
+  text-align: center;
+}
+
+th, td {
+  border:1px solid black;
+  padding:7px;
+}
+
+table {
+  margin:25px;
+  width: 319px;
+}
+
+a {
+  color: black;
+}
+
+a:hover {
+  color: #ff9b00;
+}
+.button:hover {
+  /* boder-color: #ff9b00; */
+  /* box-shadow: inset 0 .5rem 1rem rgba(0,0,0,.1)!important; */
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.075)!important;
+
+  color: #ff9b00;
+
+}
+

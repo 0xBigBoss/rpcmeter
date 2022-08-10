@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-#uoye6&0(pj*d3e4x3hasy1d#@b4h0^ct332s0n8v8zo(dy8xe"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = True 
+CSRF_TRUSTED_ORIGINS = ["https://thundermeter.io"]
 ALLOWED_HOSTS = ["*"]
 
 
@@ -77,8 +78,12 @@ WSGI_APPLICATION = "thundermeter.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ["DB_NAME"],
+        "HOST": os.environ["DB_HOST"],
+        "USER": os.environ["DB_USER"],
+        "PORT": os.environ["DB_PORT"],
+        "PASSWORD": os.environ["DB_PASSWORD"]
     }
 }
 
