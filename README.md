@@ -1,4 +1,4 @@
-# thundermeter
+# rpcmeter
 
 ## [NATIVE] How to run
 

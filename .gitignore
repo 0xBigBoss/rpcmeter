@@ -1,4 +1,5 @@
 __pycache__
+latency/migrations
 
 # We should not be committing this
 # db

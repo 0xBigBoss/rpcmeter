@@ -23,12 +23,12 @@ start:
 .PHONY: connect
 ## Connect (i.e. open a shell) Start to the local dockerzied django app with `make connect)
 connect:
-	docker exec -it thundermeter /bin/bash
+	docker exec -it rpcmeter /bin/bash
 
 .PHONY: freeze
 ## Snapshot current python dependencies into a requirements.txt file with `make freeze` (run from inside container)
 freeze:
-# docker exec -it thundermeter pip freeze > requirements.txt
+# docker exec -it rpcmeter pip freeze > requirements.txt
 	pip freeze > requirements.txt
 
 .PHONY: format
