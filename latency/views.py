@@ -25,6 +25,7 @@ def chain(request, chain, region):
             "data": json.dumps(data),
             "providers": Provider.objects.all(),
             "chain": chain.name.capitalize(),
+            "region": region.name.capitalize(),
         },
     )
 
