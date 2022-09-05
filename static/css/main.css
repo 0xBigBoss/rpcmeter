@@ -1,34 +1,31 @@
 body {
   background-image: url("/static/background.svg");
   background-size: cover;
+   /*white background color*/
+  /*background-color: #f3f3f3 !important;*/
 
-  font-family: "Chivo";
+  font-family: "Chivo" !important;
   text-align: center;
 }
 
-th, td {
-  border:1px solid black;
-  padding:7px;
-}
-
-table {
-  margin:25px;
-  width: 319px;
-}
-
 a {
-  color: black;
+  color: #978f90 !important;
 }
 
 a:hover {
-  color: #ff9b00;
+  color: #ff9b00 !important;
 }
 .button:hover {
-  /* boder-color: #ff9b00; */
-  /* box-shadow: inset 0 .5rem 1rem rgba(0,0,0,.1)!important; */
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.075)!important;
 
   color: #ff9b00;
 
 }
 
+.rounded {
+  border-radius: 20rem !important;
+}
+
+.vh-75 {
+  height: 75vh;
+}

@@ -19,7 +19,8 @@ from django.urls import path
 from latency import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("chain/<str:chain>", views.chain),
+    path("admin", admin.site.urls),
+    path("<str:chain>", views.regions),
+    path("<str:chain>/<str:region>", views.chain),
     path("", views.index),
 ]

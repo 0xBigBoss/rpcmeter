@@ -1,28 +1,10 @@
 {% extends 'layout.html' %}
 {%load static%}
 {% block body %}
-    <div class="container">
-      <div class="shadow-lg bg-light">
-        <div class="row mt-4 mb-4 text-center">
-          <div class="col">
-            <!-- <h2 class='mt-2'><b>ThunderMeter</b></h2> -->
-            <a href="/"
-              ><img
-                class="p-4"
-                href="/"
-                width="350px;"
-                src="{%static 'full-logo.svg'%}"
-                alt=""
-            /></a>
-
-            <p>A RPC Latency Tracker (Beta)</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="shadow-lg bg-light">
+    <div class="container vh-100">
+      <div class="shadow rounded bg-white">
         <div class="text-center pt-3">
-          <h4>{{chain}}:</h4>
+          <h4><strong>{{chain}}:</strong></h4>
         </div>
         <div class="row p-3" style="">
           <div class="col">
@@ -42,9 +24,9 @@
         </div>
       </div>
 
-      <div class="shadow-lg bg-light">
+      <div class="shadow rounded bg-white">
         <div class="row mt-5 p-3" id="statistics">
-          <div class="">
+          <div class="col">
             <table class="table table-striped">
               <h5><strong>All RPCs</strong></h5>
               <thead>
@@ -53,35 +35,13 @@
                   <th>Median Response Times (sec)</th>
                 </tr>
               </thead>
-              <tbody id="median-times"></tbody>
+              <tbody id="median-times">
+              </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <div class="shadow-lg bg-light">
-        <div class="row mt-5 p-4 mb-5">
-          <div class="col">
-            <div class="row">
-              <h5><strong>What is the ThunderMeter?</strong></h5>
-            </div>
-            <div class="row text-left">
-              <p>
-                The Thundermeter was a tool built by
-                <a href="https://t.me/p1errre" target="_blank">Pierre</a> and
-                <a href="https://t.me/Dolshansky" target="_blank">Olshansky</a>.
-                The aim of the tool is to track different RPC providers' latency
-                and response times to watch POKT become the fastest RPC provider
-                ;).
-              </p>
-            </div>
-            <div class="row text-left">
-              <b>Technical Details</b>
-              <p>Every benchmark is created by sending 100 eth_getBalance("0x0000000000000000000000000000000000000000") in parallel, and measuring the latency of each request. This process is repeated 5 times per benchmark with a 5 second delay between. The server making these requests is in Miami, Florida</p>
-            </div>
-          </div>
-        </div>
-      </div>
       <script type="text/javascript">
 
         Chart.defaults.font.family = "Chivo"
@@ -114,12 +74,13 @@
         latest_median_times = []
         timestamps = []
         table = document.querySelector("#median-times")
+
+	// fill out ALL RPCs table
         for (var i = 0; i < providers.length; i++) {
           median_times[providers[i]]=[]
 
           var row = table.insertRow(0);
 
-          // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
 
@@ -135,6 +96,7 @@
             if (timestamps.includes(obj[providers[i]][n]["fields"]["timestamp"]) == false){
               timestamps.push(obj[providers[i]][n]["fields"]["timestamp"])
             }
+
             median_times[providers[i]].push(obj[providers[i]][n]["fields"]["p50"])
           }
 
@@ -142,6 +104,7 @@
 
           var table_area = document.querySelector("#statistics")
           var div = document.createElement('div');
+	  div.classList.add("col");
           var header = document.createElement('h5')
           header.style.fontWeight = "bold"
 
@@ -165,7 +128,8 @@
           stats_labels.splice(0, 1)
           stats_labels.splice(0, 1)
           console.log(stats_labels, "stat_labels")
-          for (var j = 0; j < stats_labels.length; j++) {
+	  // -1 to avoid the region, which we do not want
+          for (var j = 0; j < stats_labels.length - 1; j++) {
             var row = tbdy.insertRow(0)
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
@@ -173,7 +137,7 @@
             cell1.innerHTML = stats_labels[j]
             cell2.innerHTML = obj[providers[i]][obj[providers[i]].length-1]["fields"][stats_labels[j]].toFixed(4)
           }
-          // console.log(tbl)
+
           div.appendChild(header);
           tbl.appendChild(thead);
           tbl.appendChild(tbdy);
@@ -209,7 +173,8 @@
             label: providers[i],
             data: formatted_data,
             borderColor: border_colors[i],
-            backgroundColor: background_colors[i]
+            backgroundColor: background_colors[i],
+	    lineTension: 0.8
           })
         }
 

@@ -25,7 +25,6 @@ SECRET_KEY = "django-insecure-#uoye6&0(pj*d3e4x3hasy1d#@b4h0^ct332s0n8v8zo(dy8xe
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
-CSRF_TRUSTED_ORIGINS = ["https://thundermeter.io"]
 ALLOWED_HOSTS = ["*"]
 
 
@@ -38,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "latency",
+    "latency"
 ]
 
 MIDDLEWARE = [

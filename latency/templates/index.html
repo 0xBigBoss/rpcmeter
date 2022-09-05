@@ -1,22 +1,27 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block body %}
-    <div class="container h-100">
-     <div class="d-flex justify-content-md-center align-items-center vh-100">
-       <div class="shadow p-5 text-center bg-white">
-         <img src="{%static 'full-logo.svg'%}" width="400px" alt="">
-         <div class="header mt-5">
-         </div>
-         <div class="chains row">
-           {%for chain in chains%}
-           <a class="shadow p-3 col m-2 button" href="/{{chain.name}}">
-             <div class="" href="/{{chain.name}}">
-               {{chain.name}}
-             </div>
-           </a>
-            {%endfor%}
+    <div class="container vh-100 text-center ">
+     <div class="row">
+       <div class="col"></div>
+       <div class="d-flex justify-content-md-center align-items-center vh-75 col-6">
+         <div class="shadow p-5 text-center rounded bg-white">
+           <img src="{%static 'full-logo.svg'%}" class="mb-5" width="350px" alt="thundermeter logo">
+           <div class="row">
+             <p>There are tens of RPC providers, but only one that is the best. RPCMeter tracks the latency of different RPC Providers and compares their latency in different regions, on different chains.</p>
+           </div>
+           <div class="row">
+             {%for chain in chains%}
+             <a class="shadow p-3 col m-2 button" href="/{{chain.name}}">
+               <div class="rounded" href="/{{chain.name}}">
+                 {{chain.name}}
+               </div>
+             </a>
+              {%endfor%}
+           </div>
          </div>
        </div>
+       <div class="col"></div>
      </div>
     </div>
 {% endblock %}

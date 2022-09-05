@@ -14,8 +14,8 @@ def chain(request, chain, region):
     chain = Chain.objects.get(name=chain.lower())
     region = Region.objects.get(name=region.lower())
 
-    for p in Provider.objects.filter(region=region, chain=chain):
-        benchmarks = Benchmark.objects.filter(provider=p)
+    for p in Provider.objects.filter(chain=chain):
+        benchmarks = Benchmark.objects.filter(provider=p, region=region)
         data[p.name] = json.loads(serializers.serialize("json", benchmarks))
 
     return render(
@@ -40,7 +40,7 @@ def regions(request, chain):
         "region.html",
         {
             "regions": regions,
-            "chain": chain.capitalize(),
+            "chain": chain
         },
     )
 

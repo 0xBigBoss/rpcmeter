@@ -2,29 +2,21 @@
   <g clip-path="url(#a)">
     <path fill="#FFF9E6" d="M0 0h1322v1001H0z"/>
     <circle cx="59.5" cy="174.5" r="146.5" fill="#FDC70C" fill-opacity=".15"/>
-    <circle cx="1213.5" cy="931.5" r="165.5" fill="#FDC70C" fill-opacity=".15"/>
-    <circle cx="710.5" cy="339.5" r="165.5" fill="#01AAE0" fill-opacity=".2"/>
+    <circle cx="1111.5" cy="879.5" r="165.5" fill="#FDC70C" fill-opacity=".15"/>
+    <circle cx="1213.5" cy="480.5" r="165.5" fill="#01AAE0" fill-opacity=".2"/>
     <g filter="url(#b)">
-      <circle cx="894" cy="230" r="116" fill="#FDC70C" fill-opacity=".5" style="mix-blend-mode:darken"/>
+      <circle cx="1219" cy="109" r="116" fill="#FDC70C" fill-opacity=".5" style="mix-blend-mode:darken"/>
     </g>
-    <rect width="428.43" height="375.816" x="279.001" y="1056.22" fill="#01AAE0" fill-opacity=".2" rx="88" transform="rotate(-141.546 279.001 1056.22)"/>
-    <g filter="url(#c)">
-      <rect width="651.304" height="176.524" x="850" y="689.167" fill="#01AAE0" fill-opacity=".2" rx="34" transform="rotate(-22.683 850 689.167)"/>
-    </g>
+    <rect width="428.43" height="375.816" x="232.506" y="1075.74" fill="#01AAE0" fill-opacity=".2" rx="88" transform="rotate(-141.546 232.506 1075.74)"/>
   </g>
   <defs>
-    <filter id="b" width="832" height="832" x="478" y="-186" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+    <clipPath id="a">
+      <path fill="#fff" d="M0 0h1322v1001H0z"/>
+    </clipPath>
+    <filter id="b" width="832" height="832" x="803" y="-307" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
       <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
       <feGaussianBlur result="effect1_foregroundBlur_2_2" stdDeviation="150"/>
     </filter>
-    <filter id="c" width="748.054" height="493.092" x="810.473" y="398.473" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
-      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-      <feGaussianBlur result="effect1_foregroundBlur_2_2" stdDeviation="25"/>
-    </filter>
-    <clipPath id="a">
-      <path fill="#fff" d="M0 0h1322v1001H0z"/>
-    </clipPath>
   </defs>
 </svg>

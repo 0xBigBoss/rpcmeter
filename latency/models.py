@@ -12,8 +12,10 @@ class Benchmark(models.Model):
     p99 = models.FloatField()
     mean = models.FloatField()
 
+    region = models.ForeignKey('Region', models.DO_NOTHING)
+
     def __str__(self):
-        return self.provider.name + " " + str(self.median)
+        return self.provider.name + " " + str(self.p50)
 
     class Meta:
         managed = True
@@ -33,14 +35,29 @@ class Chain(models.Model):
 
 
 class Provider(models.Model):
-    name = models.CharField(max_length=99999)
-    url = models.CharField(max_length=99999)
-    symbol = models.CharField(max_length=99999)
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+    symbol = models.CharField(max_length=255)
     chain = models.ForeignKey(Chain, models.DO_NOTHING)
+#    region = models.ForeignKey('Region', models.DO_NOTHING, null=True)
 
     def __str__(self):
         return self.name + " " + self.chain.name
 
     class Meta:
-        managed = True
-        db_table = "provider"
+        managed = True 
+        db_table = 'provider'
+
+
+class Region(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        managed = True 
+        db_table = 'region'
